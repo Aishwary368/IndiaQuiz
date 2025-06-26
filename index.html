@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultra Hard India Quiz</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #00f7ff;
+    }
+    .question {
+      margin: 1.5rem 0;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #00f7ff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+    .result {
+      font-size: 1.2rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>India Quiz (Ultra Hard Mode 🔥)</h1>
+    <form id="quizForm">
+      <label>Enter your name:</label>
+      <input type="text" id="username" required />
+
+      <div class="question">
+        <label>1. What was the ancient name of Bihar during the Vedic period?</label><br>
+        <select id="q1">
+          <option>--Select--</option>
+          <option value="magadha">Magadha</option>
+          <option value="videha">Videha</option>
+          <option value="mithila">Mithila</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>2. Who was the first Indian to be elected to the British Parliament?</label><br>
+        <select id="q2">
+          <option>--Select--</option>
+          <option value="mahatma gandhi">Mahatma Gandhi</option>
+          <option value="dadabhai naoroji">Dadabhai Naoroji</option>
+          <option value="bhikaji cama">Bhikaji Cama</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>3. Which Indian mathematician first proposed the concept of zero?</label><br>
+        <select id="q3">
+          <option>--Select--</option>
+          <option value="ramanujan">Ramanujan</option>
+          <option value="brahmagupta">Brahmagupta</option>
+          <option value="aryabhata">Aryabhata</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>4. Where is India’s only active volcano located?</label><br>
+        <select id="q4">
+          <option>--Select--</option>
+          <option value="mauna loa">Mauna Loa</option>
+          <option value="barren island">Barren Island</option>
+          <option value="nicobar">Nicobar</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>5. What is the name of the Indian satellite that discovered water on the Moon?</label><br>
+        <select id="q5">
+          <option>--Select--</option>
+          <option value="chandrayaan-1">Chandrayaan-1</option>
+          <option value="mangalyaan">Mangalyaan</option>
+          <option value="risat-2br1">RISAT-2BR1</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>6. Which Mughal emperor banned music in his court?</label><br>
+        <select id="q6">
+          <option>--Select--</option>
+          <option value="babur">Babur</option>
+          <option value="aurangzeb">Aurangzeb</option>
+          <option value="akbar">Akbar</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>7. Who wrote the Sanskrit epic "Kiratarjuniya"?</label><br>
+        <select id="q7">
+          <option>--Select--</option>
+          <option value="kalidasa">Kalidasa</option>
+          <option value="bharavi">Bharavi</option>
+          <option value="banabhatta">Banabhatta</option>
+        </select>
+      </div>
+
+      <button type="submit">Submit Quiz</button>
+      <div class="result" id="result"></div>
+    </form>
+  </div>
+
+  <script>
+    emailjs.init("YOUR_PUBLIC_KEY_HERE"); // Replace this
+
+    const answers = [
+      "videha",
+      "dadabhai naoroji",
+      "aryabhata",
+      "barren island",
+      "chandrayaan-1",
+      "aurangzeb",
+      "bharavi"
+    ];
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      let score = 0;
+
+      for (let i = 1; i <= 7; i++) {
+        const userAnswer = document.getElementById(`q${i}`).value.toLowerCase();
+        if (userAnswer === answers[i - 1]) {
+          score++;
+        }
+      }
+
+      const name = document.getElementById("username").value;
+
+      document.getElementById("result").innerText = `You got ${score} out of 7 right!`;
+
+      emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+        user_name: name,
+        score: `${score}/7`,
+      })
+      .then(() => console.log("Email sent successfully"))
+      .catch(err => console.error("Email error:", err));
+    });
+  </script>
+</body>
+</html>
